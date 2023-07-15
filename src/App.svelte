@@ -1,47 +1,45 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  let height: number, weight: number
+  $: bmi = Math.floor((weight / (height / 100) ** 2) * 100) / 100
 </script>
 
-<main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+<main class="max-w-2xl mx-auto p-8">
+  <h1 class="text-4xl font-bold text-center mb-4">BMI Calc</h1>
+  <div class="form-control mb-6">
+    <div class="relative my-4">
+      <input placeholder="Height" bind:value={height} class="w-full input input-bordered" />
+      <div class="absolute bottom-0 right-0 p-3">cm</div>
+    </div>
+    <div class="relative my-4">
+      <input placeholder="Weight" bind:value={weight} class="w-full input input-bordered" />
+      <div class="absolute bottom-0 right-0 p-3">kg</div>
+    </div>
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  {#if bmi}
+    {#if bmi < 18.5}
+      <div class="bg-blue-300 text-blue-800 rounded-box p-4 h-40 flex justify-center items-center text-2xl">
+        <div>{bmi}</div>
+      </div>
+    {:else if bmi < 25}
+      <div class="bg-green-300 text-green-800 rounded-box p-4 h-40 flex justify-center items-center text-2xl font-bold">
+        <div>{bmi}</div>
+      </div>
+    {:else if bmi < 30}
+      <div class="bg-red-300 text-red-800 rounded-box p-4 h-40 flex justify-center items-center text-2xl font-bold">
+        <div>{bmi}</div>
+      </div>
+    {:else if bmi < 35}
+      <div class="bg-red-500 text-red-100 rounded-box p-4 h-40 flex justify-center items-center text-2xl font-bold">
+        <div>{bmi}</div>
+      </div>
+    {:else if bmi < 40}
+      <div class="bg-red-950 text-red-100 rounded-box p-4 h-40 flex justify-center items-center text-2xl font-bold">
+        <div>{bmi}</div>
+      </div>
+    {:else}
+      <div class="bg-purple-950 text-purple-100 rounded-box p-4 h-40 flex justify-center items-center text-2xl font-bold">
+        <div>{bmi}</div>
+      </div>
+    {/if}
+  {/if}
 </main>
-
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
